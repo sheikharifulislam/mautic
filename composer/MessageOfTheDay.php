@@ -10,6 +10,8 @@ use Symfony\Component\Console\Helper\Helper;
 
 final class MessageOfTheDay
 {
+    private const CHANNEL = 'cli';
+
     public static function display(Event $event): void
     {
         try {
@@ -79,7 +81,12 @@ final class MessageOfTheDay
         $activeMessages = [];
 
         foreach ($data['messages'] as $message) {
-            if (empty($message['content'])) {
+            if (empty($message['content']) || !is_array($message['content'])) {
+                continue;
+            }
+
+            // Skip messages that have no content for this channel
+            if (empty($message['content'][self::CHANNEL]) || !is_array($message['content'][self::CHANNEL])) {
                 continue;
             }
 
@@ -109,7 +116,7 @@ final class MessageOfTheDay
 
             $activeMessages[] = [
                 'category' => $data['categories'][$message['category']],
-                'lines'    => is_array($message['content']) ? $message['content'] : [$message['content']],
+                'lines'    => $message['content'][self::CHANNEL],
             ];
         }
 
