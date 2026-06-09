@@ -8,6 +8,7 @@ use Rector\PHPUnit\PHPUnit60\Rector\ClassMethod\AddDoesNotPerformAssertionToNonA
 use Rector\PHPUnit\PHPUnit60\Rector\MethodCall\GetMockBuilderGetMockToCreateMockRector;
 use Rector\PHPUnit\PHPUnit80\Rector\MethodCall\SpecificAssertContainsRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
+use Rector\Symfony\Symfony43\Rector\MethodCall\WebTestCaseAssertIsSuccessfulRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -25,6 +26,7 @@ return RectorConfig::configure()
     ->withRules([
         SpecificAssertContainsRector::class,
         GetMockBuilderGetMockToCreateMockRector::class,
+        WebTestCaseAssertIsSuccessfulRector::class,
     ])
     ->withSkip([
         AddDoesNotPerformAssertionToNonAssertingTestRector::class, // Adds annotation where it does not belong to.
