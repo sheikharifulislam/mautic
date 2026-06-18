@@ -562,12 +562,6 @@ parameters:
 			path: app/bundles/AssetBundle/Entity/Asset.php
 
 		-
-			message: '#^Method Mautic\\AssetBundle\\Entity\\Asset\:\:getFile\(\) should return Symfony\\Component\\HttpFoundation\\File\\UploadedFile but returns Symfony\\Component\\HttpFoundation\\File\\File\.$#'
-			identifier: return.type
-			count: 1
-			path: app/bundles/AssetBundle/Entity/Asset.php
-
-		-
 			message: '#^Method Mautic\\AssetBundle\\Entity\\Asset\:\:getMaxSize\(\) should return string but returns int\.$#'
 			identifier: return.type
 			count: 1
@@ -16378,12 +16372,6 @@ parameters:
 			path: app/bundles/InstallBundle/Controller/InstallController.php
 
 		-
-			message: '#^PHPDoc tag @param for parameter \$index with type int is incompatible with native type float\.$#'
-			identifier: parameter.phpDocType
-			count: 1
-			path: app/bundles/InstallBundle/Controller/InstallController.php
-
-		-
 			message: '#^Method Mautic\\InstallBundle\\Helper\\SchemaHelper\:\:__construct\(\) has parameter \$dbParams with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -18118,12 +18106,6 @@ parameters:
 			path: app/bundles/LeadBundle/Controller/Api/CompanyApiController.php
 
 		-
-			message: '#^Parameter \#2 \$form of method Mautic\\LeadBundle\\Controller\\Api\\CompanyApiController\:\:setCustomFieldValues\(\) expects Symfony\\Component\\Form\\Form, Symfony\\Component\\Form\\FormInterface\<mixed\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/bundles/LeadBundle/Controller/Api/CompanyApiController.php
-
-		-
 			message: '#^Method Mautic\\LeadBundle\\Controller\\Api\\DeviceApiController\:\:checkAllAccess\(\) has parameter \$action with no type specified\.$#'
 			identifier: missingType.parameter
 			count: 1
@@ -18444,12 +18426,6 @@ parameters:
 		-
 			message: '#^PHPDoc tag @throws with type Mautic\\LeadBundle\\Controller\\InvalidArgumentException is not subtype of Throwable$#'
 			identifier: throws.notThrowable
-			count: 1
-			path: app/bundles/LeadBundle/Controller/Api/LeadApiController.php
-
-		-
-			message: '#^Parameter \#2 \$form of method Mautic\\LeadBundle\\Controller\\Api\\LeadApiController\:\:setCustomFieldValues\(\) expects Symfony\\Component\\Form\\Form, Symfony\\Component\\Form\\FormInterface\<mixed\> given\.$#'
-			identifier: argument.type
 			count: 1
 			path: app/bundles/LeadBundle/Controller/Api/LeadApiController.php
 
@@ -26604,12 +26580,6 @@ parameters:
 			identifier: parameter.deprecatedClass
 			count: 1
 			path: app/bundles/NotificationBundle/EventListener/CampaignConditionSubscriber.php
-
-		-
-			message: '#^Cannot call method getId\(\) on array\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: app/bundles/NotificationBundle/Helper/NotificationHelper.php
 
 		-
 			message: '#^Method Mautic\\NotificationBundle\\Helper\\NotificationHelper\:\:getHeaderScript\(\) has no return type specified\.$#'
@@ -39847,18 +39817,6 @@ parameters:
 				Use addContact instead; existing implementations will need a migration to rename lead_id to contact_id$#
 			'''
 			identifier: method.deprecated
-			count: 1
-			path: plugins/MauticSocialBundle/Entity/TweetStat.php
-
-		-
-			message: '#^PHPDoc tag @param for parameter \$lead with type mixed is not subtype of native type Mautic\\LeadBundle\\Entity\\Lead\|null\.$#'
-			identifier: parameter.phpDocType
-			count: 1
-			path: plugins/MauticSocialBundle/Entity/TweetStat.php
-
-		-
-			message: '#^PHPDoc tag @param for parameter \$tweet with type mixed is not subtype of native type MauticPlugin\\MauticSocialBundle\\Entity\\Tweet\|null\.$#'
-			identifier: parameter.phpDocType
 			count: 1
 			path: plugins/MauticSocialBundle/Entity/TweetStat.php
 
