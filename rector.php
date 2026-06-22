@@ -9,9 +9,7 @@ use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\Cast\RecastingRemovalRector;
 use Rector\DeadCode\Rector\If_\RemoveAlwaysTrueIfConditionRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
-use Rector\TypeDeclaration\Rector\Class_\ReturnTypeFromStrictTernaryRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
-use Rector\TypeDeclaration\Rector\ClassMethod\NumericReturnTypeFromStrictScalarReturnsRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromReturnDirectArrayRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromReturnNewRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNativeCallRector;
@@ -33,11 +31,9 @@ return RectorConfig::configure()
     ->withRules([
         ReturnTypeFromStrictTypedCallRector::class,
         TypedPropertyFromAssignsRector::class,
-        NumericReturnTypeFromStrictScalarReturnsRector::class,
         ReturnTypeFromReturnNewRector::class,
         ReturnTypeFromStrictNativeCallRector::class,
         ReturnTypeFromStrictParamRector::class,
-        ReturnTypeFromStrictTernaryRector::class,
         ClassPropertyAssignToConstructorPromotionRector::class,
         AddVoidReturnTypeWhereNoReturnRector::class,
         TypedPropertyFromStrictConstructorRector::class,
@@ -47,7 +43,7 @@ return RectorConfig::configure()
         UnserializeToSerializerDecodeRector::class,
     ])
     ->reportUnusedSkips()
-    ->withTypeCoverageLevel(10)
+    ->withTypeCoverageLevel(15)
     ->withSkip([
         '*/Test/*',
         '*/Tests/*',
