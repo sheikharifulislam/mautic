@@ -28,4 +28,5 @@ services:
       - 8036:80
 EOF
 
-ddev start -y || ddev restart -y
+ddev delete -Oy # prevent errors like "mkfifo: cannot create fifo '/var/tmp/logpipe': File exists"
+ddev start -y
