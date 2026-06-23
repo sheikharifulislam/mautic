@@ -30,6 +30,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 use Twig\Environment;
@@ -232,6 +233,11 @@ class FocusModel extends FormModel implements GlobalSearchInterface
             ]
         ) : '';
 
+        if ($form) {
+            $formName = $form->generateFormName("{$form->getName()}_focus", ['_']);
+            $this->formModel->populateValuesWithLead($form, $formContent, $formName);
+        }
+
         if ($isPreview) {
             $content = str_replace('{focus_form}', $formContent, $content, $formReplaced);
             if (!$formReplaced && !empty($formContent)) {
@@ -345,9 +351,9 @@ class FocusModel extends FormModel implements GlobalSearchInterface
             $this->dispatcher->dispatch($event, $name);
 
             return $event;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
