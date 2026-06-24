@@ -574,10 +574,8 @@ class ZohoIntegration extends CrmAbstractIntegration
     /**
      * Generate the auth login URL.  Note that if oauth2, response_type=code is assumed.  If this is not the case,
      * override this function.
-     *
-     * @return string
      */
-    public function getAuthLoginUrl()
+    public function getAuthLoginUrl(): string
     {
         $authType = $this->getAuthenticationType();
 
@@ -600,12 +598,12 @@ class ZohoIntegration extends CrmAbstractIntegration
             }
 
             return $url;
-        } else {
-            return $this->router->generate(
-                'mautic_integration_auth_callback',
-                ['integration' => $this->getName()]
-            );
         }
+
+        return $this->router->generate(
+            'mautic_integration_auth_callback',
+            ['integration' => $this->getName()]
+        );
     }
 
     /**
