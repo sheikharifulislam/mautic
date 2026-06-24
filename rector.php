@@ -37,57 +37,13 @@ return RectorConfig::configure()
     ->withPhpSets(php80: true)
     ->withCache(__DIR__.'/var/cache/rector')
     ->withRules([
-        Rector\TypeDeclaration\Rector\Empty_\EmptyOnNullableObjectToInstanceOfRector::class,
         Rector\Instanceof_\Rector\Ternary\FlipNegatedTernaryInstanceofRector::class,
-<<<<<<< HEAD
-<<<<<<< HEAD
         AddParamTypeFromPropertyTypeRector::class,
-<<<<<<< HEAD
         KnownMagicClassMethodTypeRector::class,
-=======
-=======
-=======
         // flips nested negated conditions to same-meaning clear ones
         Rector\CodeQuality\Rector\BooleanNot\SimplifyDeMorganBinaryRector::class,
-
->>>>>>> 87a0d28c49 (apply demorgan rule for more readble conds)
-<<<<<<< HEAD
->>>>>>> 065eb732f9 (apply demorgan rule for more readble conds)
-<<<<<<< HEAD
->>>>>>> c97c58da0a (apply demorgan rule for more readble conds)
-=======
-=======
-=======
-        // flips nested negated conditions to same-meaning clear ones
-        Rector\CodeQuality\Rector\BooleanNot\SimplifyDeMorganBinaryRector::class,
-
-=======
         Rector\TypeDeclaration\Rector\Empty_\EmptyOnNullableObjectToInstanceOfRector::class,
-<<<<<<< HEAD
->>>>>>> 0c164f8ce9 ([types] make use of instanceof on empty object checks)
-<<<<<<< HEAD
->>>>>>> cb1dc198b9 ([types] make use of instanceof on empty object checks)
-<<<<<<< HEAD
->>>>>>> b5dae9bad1 ([types] make use of instanceof on empty object checks)
-<<<<<<< HEAD
->>>>>>> 04b942c776 ([types] make use of instanceof on empty object checks)
-=======
-=======
-=======
-=======
         Rector\Instanceof_\Rector\Ternary\FlipNegatedTernaryInstanceofRector::class,
->>>>>>> 5b3180f125 (flip ternary to improve readability)
->>>>>>> 2849359f06 (flip ternary to improve readability)
->>>>>>> 19b064dc95 (flip ternary to improve readability)
-<<<<<<< HEAD
->>>>>>> a2e489588b (flip ternary to improve readability)
-=======
-=======
-        // flips nested negated conditions to same-meaning clear ones
-        Rector\CodeQuality\Rector\BooleanNot\SimplifyDeMorganBinaryRector::class,
-
->>>>>>> d0da2d47c2 (apply demorgan rule for more readble conds)
->>>>>>> 1773e76c71 (apply demorgan rule for more readble conds)
         ReturnTypeFromStrictTypedCallRector::class,
         TypedPropertyFromAssignsRector::class,
         ReturnTypeFromStrictNativeCallRector::class,
@@ -99,18 +55,9 @@ return RectorConfig::configure()
         UnserializeToSerializerDecodeRector::class,
     ])
     ->reportUnusedSkips()
-<<<<<<< HEAD
     ->withTypeCoverageLevel(23)
-<<<<<<< HEAD
     ->withCodingStyleLevel(3)
-    ->withCodeQualityLevel(17)
-=======
-    ->withCodeQualityLevel(2)
-=======
-    ->withTypeCoverageLevel(15)
     ->withCodeQualityLevel(19)
->>>>>>> 604943b2af ([types] make use of direct return over bool if/else)
->>>>>>> 22c0e941ab ([types] make use of direct return over bool if/else)
     ->withSkip([
         // too many changes
         Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector::class,
