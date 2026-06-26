@@ -11,8 +11,6 @@ wait_for_docker() {
   echo "Docker is ready."
 }
 
-wait_for_docker
-
 cat << 'EOF' > .ddev/config.local.yaml
 web_environment:
     - CODESPACES
@@ -28,4 +26,14 @@ services:
       - 8036:80
 EOF
 
+if [[ "${CODESPACES:-}" = "true" ]]; then
+    cat << 'EOF' > .git/hooks/post-checkout
+#!/usr/bin/env bash
+rm -rf var/cache
+ddev composer install --no-interaction
+ddev exec bin/console doctrine:migrations:migrate -n
+EOF
+fi
+
+wait_for_docker
 ddev start -y || ddev restart -y
