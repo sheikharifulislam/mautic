@@ -23,6 +23,13 @@
         }
     },
     "customizations": {
+        "vscode": {
+            "settings": {
+                "workbench.editorAssociations": {
+                    "*.md": "vscode.markdown.preview.editor"
+                }
+            }
+        },
         "codespaces": {
             "openFiles": [
                 ".devcontainer/CODESPACES.md"
