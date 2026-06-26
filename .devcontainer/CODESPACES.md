@@ -1,1 +1,3 @@
-TBD
+## Mautic instance is initializing ...
+
+Please wait until `CODESPACES-READY.md` shows up.

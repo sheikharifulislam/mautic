@@ -30,5 +30,6 @@
         }
     },
     "postCreateCommand": ".devcontainer/setup-project.sh",
+    "postAttachCommand": ".devcontainer/post-attach.sh",
     "updateContentCommand": ".devcontainer/prebuild-project.sh"
 }
