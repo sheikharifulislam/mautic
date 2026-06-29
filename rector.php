@@ -55,8 +55,8 @@ return RectorConfig::configure()
         Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector::class,
 
         Rector\Renaming\Rector\FuncCall\RenameFunctionRector::class,
-        //        '*/Test/*',
-        //        '*/Tests/*',
+        '*/Test/*',
+        '*/Tests/*',
 
         // Avoiding breaking BC breaks with forced return types in public methods
         ReturnTypeFromReturnNewRector::class => [
@@ -66,6 +66,11 @@ return RectorConfig::configure()
 
         // lets handle later, once we have more type declaratoins
         RecastingRemovalRector::class,
+
+        Rector\DeadCode\Rector\Property\RemoveUnusedPrivatePropertyRector::class => [
+            // test fixture
+            __DIR__.'/app/bundles/CoreBundle/Tests/Unit/Doctrine/ArrayTypeTest.php',
+        ],
 
         // designed to be overriden by 3rd party, adding return type will break BC
         Rector\TypeDeclaration\Rector\ClassMethod\StringReturnTypeFromStrictScalarReturnsRector::class => [
