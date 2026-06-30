@@ -34,13 +34,13 @@ class RequestSubscriberTest extends \PHPUnit\Framework\TestCase
             ->willReturn(new CsrfToken($aCsrfTokenId, $aCsrfTokenValue));
 
         $csrfTokenManagerMock->method('isTokenValid')
-          ->willReturnCallback(fn (CsrfToken $token) => $token->getValue() === $aCsrfTokenValue);
+          ->willReturnCallback(fn (CsrfToken $token): bool => $token->getValue() === $aCsrfTokenValue);
 
         $this->request = new Request();
 
         $this->event = $this->getMockBuilder(RequestEvent::class)
             ->setConstructorArgs([
-                $this->createMock(HttpKernelInterface::class),
+                $this->createStub(HttpKernelInterface::class),
                 $this->request,
                 HttpKernelInterface::MAIN_REQUEST,
             ])->getMock();
@@ -51,7 +51,7 @@ class RequestSubscriberTest extends \PHPUnit\Framework\TestCase
 
         $this->subscriber = new RequestSubscriber(
             $csrfTokenManagerMock,
-            $this->createMock(TranslatorInterface::class),
+            $this->createStub(TranslatorInterface::class),
             $twig
         );
     }

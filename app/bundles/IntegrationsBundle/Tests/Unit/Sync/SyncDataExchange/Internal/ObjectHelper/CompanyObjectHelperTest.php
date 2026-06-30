@@ -22,22 +22,22 @@ use PHPUnit\Framework\TestCase;
 class CompanyObjectHelperTest extends TestCase
 {
     /**
-     * @var CompanyModel&MockObject
+     * @var MockObject&CompanyModel
      */
     private MockObject $model;
 
     /**
-     * @var CompanyRepository&MockObject
+     * @var MockObject&CompanyRepository
      */
     private MockObject $repository;
 
     /**
-     * @var Connection&MockObject
+     * @var Connection&\PHPUnit\Framework\MockObject\Stub
      */
-    private MockObject $connection;
+    private \PHPUnit\Framework\MockObject\Stub $connection;
 
     /**
-     * @var FieldsWithUniqueIdentifier&MockObject
+     * @var MockObject&FieldsWithUniqueIdentifier
      */
     private MockObject $fieldsWithUniqueIdentifier;
 
@@ -45,7 +45,7 @@ class CompanyObjectHelperTest extends TestCase
     {
         $this->model                      = $this->createMock(CompanyModel::class);
         $this->repository                 = $this->createMock(CompanyRepository::class);
-        $this->connection                 = $this->createMock(Connection::class);
+        $this->connection                 = $this->createStub(Connection::class);
         $this->fieldsWithUniqueIdentifier = $this->createMock(FieldsWithUniqueIdentifier::class);
 
         $this->fieldsWithUniqueIdentifier->method('getFieldsWithUniqueIdentifier')
@@ -203,7 +203,7 @@ class CompanyObjectHelperTest extends TestCase
     public function testFindObjectById(): void
     {
         $company = new Company();
-        $this->repository->expects(self::once())
+        $this->repository->expects($this->once())
             ->method('getEntity')
             ->with(1)
             ->willReturn($company);
@@ -213,7 +213,7 @@ class CompanyObjectHelperTest extends TestCase
 
     public function testFindObjectByIdReturnsNull(): void
     {
-        $this->repository->expects(self::once())
+        $this->repository->expects($this->once())
             ->method('getEntity')
             ->with(1);
 
@@ -223,7 +223,7 @@ class CompanyObjectHelperTest extends TestCase
     public function testSetFieldValues(): void
     {
         $company = new Company();
-        $this->model->expects(self::once())
+        $this->model->expects($this->once())
             ->method('setFieldValues')
             ->with($company, []);
         $this->getObjectHelper()->setFieldValues($company);

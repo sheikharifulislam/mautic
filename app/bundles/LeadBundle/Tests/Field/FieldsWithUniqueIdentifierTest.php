@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
 class FieldsWithUniqueIdentifierTest extends TestCase
 {
     /**
-     * @var MockObject|FieldList
+     * @var MockObject&FieldList
      */
-    private $fieldList;
+    private MockObject $fieldList;
 
     /**
      * @var FieldsWithUniqueIdentifier

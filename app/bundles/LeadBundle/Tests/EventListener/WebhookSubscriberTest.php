@@ -21,15 +21,21 @@ class WebhookSubscriberTest extends \PHPUnit\Framework\TestCase
 {
     private \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher;
 
-    private LeadModel|\PHPUnit\Framework\MockObject\MockObject $leadModel;
+    /**
+     * @var \PHPUnit\Framework\MockObject\Stub&LeadModel
+     */
+    private \PHPUnit\Framework\MockObject\Stub $leadModel;
 
-    private WebhookModel|\PHPUnit\Framework\MockObject\MockObject $mockModel;
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject&WebhookModel
+     */
+    private \PHPUnit\Framework\MockObject\MockObject $mockModel;
 
     protected function setUp(): void
     {
         $this->dispatcher = new EventDispatcher();
         $this->mockModel  = $this->createMock(WebhookModel::class);
-        $this->leadModel  = $this->createMock(LeadModel::class);
+        $this->leadModel  = $this->createStub(LeadModel::class);
     }
 
     public function testNewContactEventIsFiredWhenIdentified(): void
@@ -38,7 +44,7 @@ class WebhookSubscriberTest extends \PHPUnit\Framework\TestCase
             ->method('queueWebhooksByType')
             ->with(
                 $this->callback(
-                    fn ($type) => LeadEvents::LEAD_POST_SAVE.'_new' === $type
+                    fn ($type): bool => LeadEvents::LEAD_POST_SAVE.'_new' === $type
                 )
             );
 
@@ -61,7 +67,7 @@ class WebhookSubscriberTest extends \PHPUnit\Framework\TestCase
             ->method('queueWebhooksByType')
             ->with(
                 $this->callback(
-                    fn ($type) => LeadEvents::LEAD_POST_SAVE.'_update' === $type
+                    fn ($type): bool => LeadEvents::LEAD_POST_SAVE.'_update' === $type
                 )
             );
 
@@ -96,7 +102,7 @@ class WebhookSubscriberTest extends \PHPUnit\Framework\TestCase
     public function testWebhookIsNotDeliveredIfContactIsWithoutChanges(): void
     {
         $mockModel  = $this->createMock(WebhookModel::class);
-        $leadModel  = $this->createMock(LeadModel::class);
+        $leadModel  = $this->createStub(LeadModel::class);
 
         $mockModel->expects($this->exactly(0))
             ->method('queueWebhooksByType');

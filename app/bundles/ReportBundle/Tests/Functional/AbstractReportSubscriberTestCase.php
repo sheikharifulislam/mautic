@@ -57,7 +57,7 @@ abstract class AbstractReportSubscriberTestCase extends MauticMysqlTestCase
         $crawlerReportTable = $this->domTableToArray($crawlerReportTable);
 
         // remove row numbers
-        $resultReportTable = array_map(function ($subArray) {
+        $resultReportTable = array_map(function ($subArray): array {
             array_shift($subArray);
 
             return $subArray;
@@ -141,7 +141,7 @@ abstract class AbstractReportSubscriberTestCase extends MauticMysqlTestCase
      */
     private function domTableToArray(Crawler $crawler): array
     {
-        $table = $crawler->filter('tr')->each(fn ($tr) => $tr->filter('td')->each(fn ($td) => trim($td->text())));
+        $table = $crawler->filter('tr')->each(fn ($tr) => $tr->filter('td')->each(fn ($td): string => trim($td->text())));
         array_shift($table);
         array_pop($table);
 

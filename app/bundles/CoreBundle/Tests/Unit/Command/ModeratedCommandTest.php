@@ -17,15 +17,18 @@ use Symfony\Component\Lock\LockInterface;
 class ModeratedCommandTest extends TestCase
 {
     private string $lockFilePath;
-    private CoreParametersHelper|MockObject $coreParametersHelper;
+    /**
+     * @var MockObject&CoreParametersHelper
+     */
+    private MockObject $coreParametersHelper;
 
     /**
-     * @var MockObject|InputInterface
+     * @var MockObject&InputInterface
      */
     private MockObject $input;
 
     /**
-     * @var MockObject|PathsHelper
+     * @var MockObject&PathsHelper
      */
     private MockObject $pathsHelper;
 
@@ -67,7 +70,7 @@ class ModeratedCommandTest extends TestCase
 
         $this->input->method('getOption')
             ->willReturnCallback(
-                fn (string $name) => match ($name) {
+                fn (string $name): ?string => match ($name) {
                     'lock_mode' => 'file_lock',
                     default     => null,
                 }
@@ -83,7 +86,7 @@ class ModeratedCommandTest extends TestCase
 
         $this->input->method('getOption')
             ->willReturnCallback(
-                fn (string $name) => match ($name) {
+                fn (string $name): string|true|null => match ($name) {
                     'lock_mode'      => ModeratedCommand::MODE_FLOCK,
                     'bypass-locking' => true,
                     default          => null,
@@ -100,7 +103,7 @@ class ModeratedCommandTest extends TestCase
 
         $this->input->method('getOption')
             ->willReturnCallback(
-                fn (string $name) => match ($name) {
+                fn (string $name): bool|string|null => match ($name) {
                     'lock_mode'      => ModeratedCommand::MODE_FLOCK,
                     'bypass-locking' => false,
                     'force'          => true,
@@ -126,7 +129,7 @@ class ModeratedCommandTest extends TestCase
 
         $this->input->method('getOption')
             ->willReturnCallback(
-                fn (string $name) => match ($name) {
+                fn (string $name): string|false|null => match ($name) {
                     'lock_mode'      => ModeratedCommand::MODE_PID,
                     'bypass-locking' => false,
                     default          => null,
@@ -144,7 +147,7 @@ class ModeratedCommandTest extends TestCase
             ->name('sf*')
             ->files();
 
-        $this->assertEquals(1, $finder->count());
+        $this->assertCount(1, $finder);
 
         // Complete the command
         $this->fakeModeratedCommand->forceCompleteRun();
@@ -155,7 +158,7 @@ class ModeratedCommandTest extends TestCase
             ->name('sf*')
             ->files();
 
-        $this->assertEquals(0, $finder->count());
+        $this->assertCount(0, $finder);
 
         // Cleanup
         rmdir($runDir);
@@ -172,7 +175,7 @@ class ModeratedCommandTest extends TestCase
 
         $this->input->method('getOption')
             ->willReturnCallback(
-                fn (string $name) => match ($name) {
+                fn (string $name): string|false|null => match ($name) {
                     'lock_mode'      => ModeratedCommand::MODE_FLOCK,
                     'bypass-locking' => false,
                     default          => null,
@@ -189,7 +192,7 @@ class ModeratedCommandTest extends TestCase
             ->name('sf*')
             ->files();
 
-        $this->assertEquals(1, $finder->count());
+        $this->assertCount(1, $finder);
 
         // Check the file is locked
         $file        = $this->getFirstFile($finder);
@@ -223,7 +226,7 @@ class ModeratedCommandTest extends TestCase
 
         $this->input->method('getOption')
             ->willReturnCallback(
-                fn (string $name) => match ($name) {
+                fn (string $name): string|false|null => match ($name) {
                     'lock_mode'      => ModeratedCommand::MODE_REDIS,
                     'bypass-locking' => false,
                     default          => null,
@@ -284,7 +287,7 @@ class ModeratedCommandTest extends TestCase
     public function testCompleteRunHandlesNullLockObject(): void
     {
         // Ensure lock object is null
-        $this->fakeModeratedCommand->setLock(null);
+        $this->fakeModeratedCommand->setLock();
 
         // Create a dummy lock file
         file_put_contents($this->lockFilePath, 'test_lock');

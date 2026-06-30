@@ -73,7 +73,7 @@ class WebhookFunctionalTest extends MauticMysqlTestCase
     public function testWebhookWorkflowWithCommandProcess(): void
     {
         $webhookQueueRepository = $this->em->getRepository(WebhookQueue::class);
-        \assert($webhookQueueRepository instanceof WebhookQueueRepository);
+        $this->assertInstanceOf(WebhookQueueRepository::class, $webhookQueueRepository);
         $this->mockSuccessfulWebhookResponse(2);
         $webhook = $this->createWebhook();
         // Ensure we have a clean slate. There should be no rows waiting to be processed at this point.
@@ -280,7 +280,7 @@ class WebhookFunctionalTest extends MauticMysqlTestCase
         $handlerStack = $this->getClientMockHandler();
         for (; $expectedToBeCalled > 0; --$expectedToBeCalled) {
             $handlerStack->append(
-                function (RequestInterface $request) use (&$sendRequestCounter) {
+                function (RequestInterface $request) use (&$sendRequestCounter): GuzzleResponse {
                     Assert::assertSame('/post', $request->getUri()->getPath());
                     $jsonPayload = json_decode($request->getBody()->getContents(), true);
                     Assert::assertNotEmpty($request->getHeader('Webhook-Signature'));
@@ -298,7 +298,7 @@ class WebhookFunctionalTest extends MauticMysqlTestCase
         $handlerStack = $this->getClientMockHandler();
         for (; $expectedToBeCalled > 0; --$expectedToBeCalled) {
             $handlerStack->append(
-                function (RequestInterface $request) use (&$sendRequestCounter) {
+                function (RequestInterface $request) use (&$sendRequestCounter): GuzzleResponse {
                     Assert::assertSame('/post', $request->getUri()->getPath());
                     $jsonPayload = json_decode($request->getBody()->getContents(), true);
                     Assert::assertNotEmpty($request->getHeader('Webhook-Signature'));

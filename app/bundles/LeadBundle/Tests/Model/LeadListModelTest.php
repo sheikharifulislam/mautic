@@ -10,7 +10,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 class LeadListModelTest extends \PHPUnit\Framework\TestCase
 {
     /** @var ListModel&MockObject */
-    protected $fixture;
+    protected MockObject $fixture;
 
     protected function setUp(): void
     {
@@ -21,7 +21,7 @@ class LeadListModelTest extends \PHPUnit\Framework\TestCase
 
         $mockListModel->expects($this->any())
             ->method('getEntity')
-            ->willReturnCallback(function ($id) {
+            ->willReturnCallback(function ($id): MockObject {
                 $mockEntity = $this->getMockBuilder(LeadList::class)
                     ->disableOriginalConstructor()
                     ->onlyMethods(['getName'])

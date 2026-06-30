@@ -167,11 +167,8 @@ class SalesforceIntegration extends CrmAbstractIntegration
     public function updateDncByDate(): bool
     {
         $featureSettings = $this->settings->getFeatureSettings();
-        if (isset($featureSettings['updateDncByDate'][0]) && 'updateDncByDate' === $featureSettings['updateDncByDate'][0]) {
-            return true;
-        }
 
-        return false;
+        return isset($featureSettings['updateDncByDate'][0]) && 'updateDncByDate' === $featureSettings['updateDncByDate'][0];
     }
 
     /**
@@ -202,13 +199,11 @@ class SalesforceIntegration extends CrmAbstractIntegration
     }
 
     /**
-     * @param array $settings
-     *
      * @return mixed[]
      *
      * @throws InvalidArgumentException
      */
-    public function getAvailableLeadFields($settings = []): array
+    public function getAvailableLeadFields(array $settings = []): array
     {
         $silenceExceptions = $settings['silence_exceptions'] ?? true;
         $salesForceObjects = [];
@@ -220,7 +215,7 @@ class SalesforceIntegration extends CrmAbstractIntegration
         }
 
         $isRequired = fn (array $field, $object): bool => ('boolean' !== $field['type'] && empty($field['nillable']) && !in_array($field['name'], ['Status', 'Id', 'CreatedDate']))
-        || ('Lead' == $object && in_array($field['name'], ['Company']))
+        || ('Lead' == $object && 'Company' == $field['name'])
         || (in_array($object, ['Lead', 'Contact']) && 'Email' === $field['name']);
 
         $salesFields = [];
@@ -254,10 +249,7 @@ class SalesforceIntegration extends CrmAbstractIntegration
                                 foreach ($fields['fields'] as $fieldInfo) {
                                     if ((!$fieldInfo['updateable'] && (!$fieldInfo['calculated'] && !in_array($fieldInfo['name'], ['Id', 'IsDeleted', 'CreatedDate'])))
                                         || !isset($fieldInfo['name'])
-                                        || (in_array(
-                                            $fieldInfo['type'],
-                                            ['reference']
-                                        ) && 'AccountId' != $fieldInfo['name'])
+                                        || ('reference' == $fieldInfo['type'] && 'AccountId' != $fieldInfo['name'])
                                     ) {
                                         continue;
                                     }
@@ -280,7 +272,7 @@ class SalesforceIntegration extends CrmAbstractIntegration
                                         ];
 
                                         // CreateDate can be updatable just in Mautic
-                                        if (in_array($fieldInfo['name'], ['CreatedDate'])) {
+                                        if ('CreatedDate' == $fieldInfo['name']) {
                                             $salesFields[$sfObject][$fieldInfo['name'].'__'.$sfObject]['update_mautic'] = 1;
                                         }
                                     } else {
@@ -2080,7 +2072,7 @@ class SalesforceIntegration extends CrmAbstractIntegration
     {
         // Salesforce craps out with double quotes and unescaped single quotes
         $findEmailsInSF = array_map(
-            fn ($lead): string => str_replace("'", "\'", $this->cleanPushData($lead['email'])),
+            fn (array $lead): string => str_replace("'", "\'", $this->cleanPushData($lead['email'])),
             $checkEmailsInSF
         );
 

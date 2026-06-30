@@ -14,7 +14,7 @@ use Symfony\Component\Cache\CacheItem;
 class RequestStateStoreTest extends TestCase
 {
     /**
-     * @var CacheProviderInterface&MockObject
+     * @var MockObject&CacheProviderInterface
      */
     private MockObject $cacheProvider;
 
@@ -41,11 +41,11 @@ class RequestStateStoreTest extends TestCase
     public function testSet(): void
     {
         $state = $this->createMock(RequestState::class);
-        $state->expects(self::once())
+        $state->expects($this->once())
             ->method('getId')
             ->willReturn($this->stateId);
 
-        $this->cacheProvider->expects(self::once())
+        $this->cacheProvider->expects($this->once())
             ->method('save')
             ->with($this->cacheItem);
 
@@ -88,7 +88,7 @@ class RequestStateStoreTest extends TestCase
 
     public function testGetIsHitRequestState(): void
     {
-        $state = $this->createMock(RequestState::class);
+        $state = $this->createStub(RequestState::class);
 
         $setUp = \Closure::bind(
             static function (CacheItem $item, RequestState $state): void {
@@ -106,7 +106,7 @@ class RequestStateStoreTest extends TestCase
     public function testRemove(): void
     {
         $id = 'whatever';
-        $this->cacheProvider->expects(self::once())
+        $this->cacheProvider->expects($this->once())
             ->method('deleteItem')
             ->with($this->cachePrefix.$id)
             ->willReturn(true);
@@ -116,7 +116,7 @@ class RequestStateStoreTest extends TestCase
 
     public function testClear(): void
     {
-        $this->cacheProvider->expects(self::once())
+        $this->cacheProvider->expects($this->once())
             ->method('clear')
             ->with($this->cachePrefix);
 
